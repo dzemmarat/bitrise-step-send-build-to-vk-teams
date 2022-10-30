@@ -1,0 +1,83 @@
+format_version: 4
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+
+app:
+  envs:
+  # An example secret param, define it (A_SECRET_PARAM) in .bitrise.secrets.yml
+  - A_SECRET_PARAM: $A_SECRET_PARAM
+  - BOT_TOKEN: $BOT_TOKEN
+  - CHAT_ID: $CHAT_ID
+  - COMMIT_MESSAGE: $COMMIT_MESSAGE
+  - COMMIT_AUTHOR: $COMMIT_AUTHOR
+  - FILE_URL: $FILE_URL
+  # If you want to share this step into a StepLib
+  - BITRISE_STEP_ID: send-build-to-vk-teams
+  - BITRISE_STEP_VERSION: "0.0.1"
+  - BITRISE_STEP_GIT_CLONE_URL: https://github.com/dzemmarat/bitrise-step-send-build-to-vk-teams.git
+  - MY_STEPLIB_REPO_FORK_GIT_URL: $MY_STEPLIB_REPO_FORK_GIT_URL
+
+workflows:
+  test:
+    before_run:
+      - audit-this-step
+    steps:
+    - go-list:
+    - golint:
+    - errcheck:
+    - go-test:
+    - path::./:
+          title: On Success
+          is_skippable: false
+          inputs:
+            - bot_token: $BOT_TOKEN
+            - chat_id: $CHAT_ID
+            - commit_message: $COMMIT_MESSAGE
+            - commit_author: $COMMIT_AUTHOR
+            - file_url: $FILE_URL
+
+
+  # ----------------------------------------------------------------
+  # --- workflows to Share this step into a Step Library
+  audit-this-step:
+    steps:
+    - script:
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -ex
+            stepman audit --step-yml ./step.yml
+
+  share-this-step:
+    envs:
+      - MY_STEPLIB_REPO_FORK_GIT_URL: $MY_STEPLIB_REPO_FORK_GIT_URL
+      - BITRISE_STEP_ID: $BITRISE_STEP_ID
+      - BITRISE_STEP_VERSION: $BITRISE_STEP_VERSION
+      - BITRISE_STEP_GIT_CLONE_URL: $BITRISE_STEP_GIT_CLONE_URL
+    description: |-
+      Send a [VK Teams](https://myteam.mail.ru/) message to a channel or group. You can:
+      
+        - Set a different text for failed and successful builds.
+        - Linkify channel names and usernames.
+      
+      ### Configuring the Step
+      
+      To use this Step, you need to create an VK Teams bot and get his [API token](https://myteam.mail.ru/botapi/tutorial/)
+      
+      Once you're ready with those, come back to Bitrise and configure the Step itself.
+      
+      1. Create a [Secret Env Var](https://devcenter.bitrise.io/builds/env-vars-secret-env-vars/) for your VK Teams API token.
+      2. Add the Secret to the **VK Teams API token** input.
+      3. Toggle the **Run if previous Step failed** option on - you should see a white checkmark on green background next to it. This allows VK Teams messages to be sent for failed builds, too.
+      4. In the **Target VK Teams channel, group or username**, set where the VK Teams message should be sent.
+      5. Customize your messages as you'd like. For the details, see the respective inputs.
+    before_run:
+    - audit-this-step
+    steps:
+    - script:
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -ex
+            bitrise share start -c "${MY_STEPLIB_REPO_FORK_GIT_URL}"
+            bitrise share create --stepid "${BITRISE_STEP_ID}" --tag "${BITRISE_STEP_VERSION}" --git "${BITRISE_STEP_GIT_CLONE_URL}"
+            bitrise share finish

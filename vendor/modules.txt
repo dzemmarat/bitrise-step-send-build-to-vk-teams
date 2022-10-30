@@ -1,0 +1,22 @@
+# github.com/hako/durafmt v0.0.0-20190612201238-650ed9f29a84
+## explicit
+github.com/hako/durafmt
+# github.com/mail-ru-im/bot-golang v0.0.0-20220405132937-fea9ed755353
+## explicit; go 1.13
+github.com/mail-ru-im/bot-golang
+# github.com/mailru/easyjson v0.0.0-20190626092158-b2ccc519800e
+## explicit
+github.com/mailru/easyjson
+github.com/mailru/easyjson/buffer
+github.com/mailru/easyjson/jlexer
+github.com/mailru/easyjson/jwriter
+# github.com/sirupsen/logrus v1.8.1
+## explicit; go 1.13
+github.com/sirupsen/logrus
+# github.com/stretchr/testify v1.8.0
+## explicit; go 1.13
+# golang.org/x/sys v0.0.0-20211013075003-97ac67df715c
+## explicit; go 1.17
+golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/unix
+golang.org/x/sys/windows
