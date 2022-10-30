@@ -4,7 +4,7 @@ Send a [VK Teams](https://myteam.mail.ru/) message to a channel or group. You ca
 
 - Set a different text for failed and successful builds.
 - Linkify channel names and usernames.
-
+  
 ## How to use this Step
 
 Can be run directly with the [bitrise CLI](https://github.com/bitrise-io/bitrise),
