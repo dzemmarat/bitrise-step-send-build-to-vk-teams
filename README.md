@@ -1,7 +1,9 @@
 # Send build to Vk Teams
 
-Send a [VK Teams](https://myteam.mail.ru/) message to a channel or group.
+Send a [VK Teams](https://myteam.mail.ru/) message to a channel or group. You can:
 
+- Set a different text for failed and successful builds.
+- Linkify channel names and usernames.
 
 ## How to use this Step
 
