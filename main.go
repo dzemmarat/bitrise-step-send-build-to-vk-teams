@@ -10,12 +10,18 @@ import (
 // Config ...
 type Config struct {
 	// Message
-	BotToken      stepconf.Secret `env:"bot_token"`
-	ChatID        stepconf.Secret `env:"chat_id"`
-	CommitMessage string          `env:"commit_message"`
-	CommitAuthor  string          `env:"commit_author"`
-	FileURL       string          `env:"BITRISE_APP_URL"`
+	BotToken stepconf.Secret `env:"bot_token"`
+	ChatID   stepconf.Secret `env:"chat_id"`
+	Version  string          `env:"app_version"`
+
+	// Success message
+	CommitMessage string `env:"commit_message"`
+	CommitAuthor  string `env:"commit_author"`
+	FileURL       string `env:"file_url"`
 }
+
+// success is true if the build is successful, false otherwise.
+var success = os.Getenv("BITRISE_BUILD_STATUS") == "0"
 
 func validate(conf *Config) error {
 	if conf.BotToken == "" {
@@ -37,9 +43,16 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err := sendMessage(conf); err != nil {
-		log.Errorf("Error: %s", err)
-		os.Exit(1)
+	if success {
+		if err := sendSuccessMessage(conf); err != nil {
+			log.Errorf("Error: %s", err)
+			os.Exit(1)
+		}
+	} else {
+		if err := sendErrorMessage(conf); err != nil {
+			log.Errorf("Error: %s", err)
+			os.Exit(1)
+		}
 	}
 
 	log.Donef("\nVkTeams message successfully sent! 🚀\n")
