@@ -13,7 +13,7 @@ app:
   # If you want to share this step into a StepLib
   - BITRISE_STEP_ID: send-build-to-vk-teams
   - BITRISE_STEP_VERSION: "0.0.1"
-  - BITRISE_STEP_GIT_CLONE_URL: git@github.com:dzemmarat/bitrise-step-send-build-to-vk-teams.git
+  - BITRISE_STEP_GIT_CLONE_URL: https://github.com/dzemmarat/bitrise-step-send-build-to-vk-teams.git
   - MY_STEPLIB_REPO_FORK_GIT_URL: git@github.com:dzemmarat/bitrise-steplib.git
 
 workflows:
