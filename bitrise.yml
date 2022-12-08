@@ -5,10 +5,8 @@ app:
   envs:
   - BOT_TOKEN: $BOT_TOKEN
   - CHAT_ID: $CHAT_ID
-  - COMMIT_MESSAGE: $COMMIT_MESSAGE
   - COMMIT_AUTHOR: $COMMIT_AUTHOR
   - APP_VERSION: $APP_VERSION
-  - FILE_URL: $FILE_URL
   # If you want to share this step into a StepLib
   - BITRISE_STEP_ID: send-build-to-vk-teams
   - BITRISE_STEP_VERSION: "1.0.0"

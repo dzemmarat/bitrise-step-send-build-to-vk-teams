@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func sendSuccessMessage(conf Config) error {
+func sendSuccessMessage(conf Config, string CommitMessage, string UrlToInstallPage) error {
 	bot, err := botgolang.NewBot(string(conf.BotToken))
 	if err != nil {
 		log.Println("Wrong token!")
@@ -14,12 +14,12 @@ func sendSuccessMessage(conf Config) error {
 	message := bot.NewMessage(string(conf.ChatID))
 	message.ParseMode = botgolang.ParseModeHTML
 	message.Text = "<b>😀 Новый билд!</b>\n" +
-		"Последний коммит: <b><i>\"" + conf.CommitMessage + "\"</i></b>\n" +
+		"Последний коммит: <b><i>\"" + CommitMessage + "\"</i></b>\n" +
 		"Пользователь: <b><i>" + conf.CommitAuthor + "</i></b>\n" +
-		"Версия: <b<i>" + "</b></i>" +
-		"Файлы билда доступны по ссылке: <b>" + conf.FileURL + "</b>"
+		"Версия: <b<i>" + conf.Version + "</b></i>" +
+		"Файлы билда доступны по ссылке: <b>" + UrlToInstallPage + "</b>"
 
-	seeNewBuildBtn := botgolang.NewURLButton("Посмотреть билд!", conf.FileURL)
+	seeNewBuildBtn := botgolang.NewURLButton("Посмотреть билд!", UrlToInstallPage)
 	keyboard := botgolang.NewKeyboard()
 	keyboard.AddRow(seeNewBuildBtn)
 	message.AttachInlineKeyboard(keyboard)

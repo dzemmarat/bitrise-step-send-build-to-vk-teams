@@ -15,13 +15,13 @@ type Config struct {
 	Version  string          `env:"app_version"`
 
 	// Success message
-	CommitMessage string `env:"commit_message"`
 	CommitAuthor  string `env:"commit_author"`
-	FileURL       string `env:"file_url"`
 }
 
 // success is true if the build is successful, false otherwise.
 var success = os.Getenv("BITRISE_BUILD_STATUS") == "0"
+string commitMessage = os.Getenv("BITRISE_GIT_MESSAGE")
+string urlToInstallPage = os.Getenv("BITRISE_PUBLIC_INSTALL_PAGE_URL")
 
 func validate(conf *Config) error {
 	if conf.BotToken == "" {
@@ -44,7 +44,7 @@ func main() {
 	}
 
 	if success {
-		if err := sendSuccessMessage(conf); err != nil {
+		if err := sendSuccessMessage(conf, commitMessage, urlToInstallPage); err != nil {
 			log.Errorf("Error: %s", err)
 			os.Exit(1)
 		}

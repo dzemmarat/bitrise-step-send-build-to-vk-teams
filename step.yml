@@ -7,6 +7,8 @@ description: |-
   
   - Set a different text for failed and successful builds.
   - Linkify channel names and usernames.
+
+  **USE IT ONLY WITH [Deploy to Bitrise.io](https://github.com/bitrise-steplib/steps-deploy-to-bitrise-io) PLUGIN**
   
   ### Configuring the Step
 
@@ -16,8 +18,8 @@ description: |-
 
     1. Create a [Secret Env Var](https://devcenter.bitrise.io/builds/env-vars-secret-env-vars/) for your VK Teams API token.
     2. Add the Secret to the **VK Teams API token** input.
-    3. Toggle the **Run if previous Step failed** option on - you should see a white checkmark on green background next to it. This allows VK Teams messages to be sent for failed builds, too.
-    4. In the **Target VK Teams channel, group or username**, set where the VK Teams message should be sent. 
+    3. Toggle the **Run if previous Step failed** option on - you should see a white checkmark on green background next to it. This allows VK Teams messages to be sent for failed builds too.
+    4. In the **Chat id**, set where the VK Teams message should be sent. 
     5. Customize your messages as you'd like. For the details, see the respective inputs.
 
 website: https://github.com/dzemmarat/bitrise-step-send-build-to-vk-teams
@@ -54,13 +56,6 @@ inputs:
       is_sensitive: true
       is_required: true
 
-  - commit_message: "Commit message"
-    opts:
-      title: "Commit message"
-      description: |
-        Commit message
-      is_required: true
-
   - commit_author: "Commit author"
     opts:
       title: "Commit author"
@@ -70,14 +65,7 @@ inputs:
 
   - app_version: "1.0.0"
     opts:
-      title: "Version of App"
+      title: "Version of App. Used in messages"
       description: |
         App version
-      is_required: true
-
-  - file_url: "File url"
-    opts:
-      title: "File url"
-      description: |
-        File url
       is_required: true
